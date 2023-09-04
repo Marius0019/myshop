@@ -1,0 +1,33 @@
+
+{% extends "base.html.twig" %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+
+<div class="container mt-3">
+	<h1 class="text-center my-4">Mon compte</h1>
+
+	<div class="col-md-10 mx-auto">
+		<div class="card bg-dark text-white mb-3">
+			<h3 class="card-header">{{ app.user }}</h3>
+            {% for commande in app.user.commande %}
+                
+                <div class="card-body">
+					<p class="card-title text-center"> {{ commande.produit.titre }}</p>
+					<p class="card-title text-center">{{ produit.prix }}</p>
+					<p class="card-title text-center">{{ commande.montant }}</p>
+					<p class="card-title text-center">{{ produit.quantite }}</p>
+				</div>
+				
+            {% endfor %}
+			<img src="{{ asset('img/upload/' ~ item.produit.photo) }}" alt="Image du produit">
+			<div class="card-body">
+				<p class="card-text">{{ produit.description|slice(0, 100)}}</p>
+				<p class="card-text text-end fw-bold">{{ produit.prix }}€/j</p>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

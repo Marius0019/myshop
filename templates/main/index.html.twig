@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+{% block body %}
+
+    <main class="container">
+        <section class="row">
+            <div class="col-12">
+                <h1 class="text-center">Produits</h1>          
+            </div>
+            {% for produit in produits %}
+                {% if produit.collection == null %}
+                    <div class="col-12">
+                        <h2>{{ produit.titre }}</h2>
+                    </div>
+                {% else %}
+                    <div class="col-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                               <img src="{{ asset('img/upload/' ~ produit.photo) }}" class="card-img-top m-4" width="120" height="214" alt="...">
+                                <p class="card-text">{{ produit.description|slice(0, 100)}}</p>
+                                <h3 class="card-title">{{ produit.titre }}</h3>
+                                <a href="{{ path('cart_add', { id: produit.id }) }}" class="btn btn-secondary">Ajouter dans le panier</a>
+                            </div>
+                        </div>
+                    </div>    
+                {% endif %}
+            {% endfor %}
+        </section>
+    </main>
+{% endblock %}
+
+

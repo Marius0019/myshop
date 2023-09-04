@@ -1,0 +1,81 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {% if editMode %}
+        Modifier
+    {% else %}
+        Ajouter
+    {% endif %}
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container my-3 p-4 w-80 border border-primary" >
+<h1 class="text-center my-4 p-4 bg-secondary"> Liste des T-shirts</h1>
+
+    <div class="container mt-5 ">
+        <table class="table table-secondary table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Couleur</th>
+                    <th>Taille</th>
+                    <th>Collection</th>
+                    <th>Photo</th>
+                    <th>Prix</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit in produits %}
+                    
+                    <tr>
+                        <td>{{ produit.id }}</td>
+                        <td>{{ produit.titre }}</td>
+                        <td>{{ produit.description|slice(0, 100)}}</td>
+                        <td>{{ produit.couleur }}</td>
+                        <td>{{ produit.taille }}</td>
+                        <td>{{ produit.collection }}</td>
+                        <td><img class="img-fluid mh-100" style="width: 100px; height: 100px;" src="{{ asset('img/upload/' ~ produit.photo) }}" alt=""></td>
+                        <td>{{ produit.prix }}</td>
+                        <td>{{ produit.stock }}</td>
+                        <td>
+                            <a href="{{ path('main_view', {id: produit.id} ) }}" class="text-dark"><i class="bi bi-search"></i></a>
+                            <a href="{{ path('main_ajout', {id: produit.id} )}}" class="text-dark"><i class="bi bi-pencil-square"></i></a>
+                            <a href="{{ path('main_supprimer', {id: produit.id} )}}" class="text-dark"><i class="bi bi-trash3-fill"></i></a>
+                        </td>
+                    </tr>
+    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="container my-4 border border-primary p-4">
+    <h2 class="text-center my-4 p-3 mb-2 bg-secondary ">Ajoutez un T-shirt</h2>
+    {{ form_start(formProduit,  {attr: {novalidate: 'novalidate'}}) }}
+    <div class="row">
+    <div class="col-6">{{ form_row(formProduit.titre) }}</div>
+    <div class="col-6">{{ form_row(formProduit.photo) }}</div>
+    </div>
+    <div class="row">
+    <div class="col-6">{{ form_row(formProduit.couleur) }}</div>
+    <div class="col-6">{{ form_row(formProduit.description) }}</div>
+    <div class="col-6">{{ form_row(formProduit.taille) }}</div>
+    <div class="col-6">{{ form_row(formProduit.collection) }}</div>
+    <div class="col-6">{{ form_row(formProduit.prix) }}</div>
+    <div class="col-6">{{ form_row(formProduit.stock) }}</div>
+    {# <div class="col-12">{{ form_row(formProduit.date_enregistrment) }}</div> #}
+    </div>
+    <button class="text-center btn btn-secondary text-dark">Enregistrer</button>
+    {{ form_end(formProduit) }}
+        </div>
+
+{% endblock %}
+
+
+

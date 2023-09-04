@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Commande n°{% endblock %}
+
+{% block body %}
+
+<
+            <div class="container mt-5">
+                <h3 class="text-center m-4">Listes de vos commande </h3>
+                <table class="table table-warning table-striped">
+                    <thead>
+                        <tr>
+            
+                            <th>Commande</th>
+                            <th>Produit</th>
+                            <th>Quantité</th>
+                            <th>Montant</th>
+                            <th>Etat</th>
+                            <th>Date_Enregistrement</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commandes in coms %}
+                            
+                            <tr>
+                                <td>{{ commandes.id }}</td>
+                                <td>{{ commandes.quantite }}</td>
+                                <td>{{ commandes.montant}}</td>
+                                <td>{{ commandes.etat}}</td>
+                                <td>{{ commandes.dateEnregistrement|date('d/m/Y à H:i:s') }}</td>
+                                <td>
+                                    <a href="{{ path('main_show', {id: commandes.id} ) }}" class="text-black"><i class="bi bi-search"></i></a>
+                                    <a href="{{ path('main_modifier', {id: commandes.id} )}}" class="text-black"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="{{ path('main_supprimer', {id: commandes.id} )}}" class="text-black"><i class="bi bi-trash3-fill"></i></a>
+                                </td>
+                            </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% endblock %}
+    

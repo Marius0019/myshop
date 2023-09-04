@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+    <h1 class="text-center m-4 text-decoration-underline">Panier</h1>
+
+    {% if items %}
+    {# si j'ai des produits dans mon panier, j'affiche son contenu #}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th scope="row">Prix</th>
+                <th>Quantité</th>
+                <th >Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for item in items %}
+                <tr>
+                    <td><img src="{{ asset('img/upload/' ~ item.produit.photo) }}" alt="" width="50"></td>
+                    <td>{{ item.produit.prix }}€</td>
+                    <td>
+
+                        <a href="{{ path('cart_moins', {id: item.produit.id})}}" class="btn btn-secondary">-</a>
+                        {{ item.quantity }}
+                        <a href="{{ path('cart_plus', {id: item.produit.id})}}" class="btn btn-secondary">+</a>
+
+                    </td>
+                    <td>{{ item.produit.prix * item.quantity }}€</td>
+                    <td class="text-center">
+                        <a href="{{ path('cart_remove', {id: item.produit.id })}}" class="btn btn-danger">Retirer</a>
+                    </td>
+                </tr>   
+             
+            {% endfor %}
+        
+        </tbody>
+        <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end">Total :</td>
+                    <td colspan="2" >{{total}}€</td>
+                </tr>
+        </tfoot>
+    </table>
+   
+    {# {% for commandes in coms %} #}
+        
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+        <a href="{{ path('commande_validation')}}" class=""><button class="btn btn-outline-danger" type="button">Valider mon panier</button></a>
+    </div> 
+    {# {% endfor %} #}
+   
+
+    {% else %}
+        <h2 class="text-center mt-5">Votre panier est vide</h2>
+        <a href="{{ path('affiche_produit')}}" class="d-grid gap-2 col-3 mx-auto m-5"><button class="btn btn-secondary" type="button">Retour</button></a>
+
+    {% endif %}
+    
+    
+{% endblock %}

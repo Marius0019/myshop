@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Commande n°{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card border-primary mb-3">
+        <div class="card-header text-center">
+
+            {% for produit in produits %}
+            <img class="img-fluid" src="{{ asset('img/upload/' ~ produit.photo) }}" alt="photo article">
+            
+        </div>
+        <div class="card-body">
+            <p class="card-title text-center"> {{ produit.titre }}</p>
+            <p class="card-title text-center">{{ produit.prix }}</p>
+            <p class="card-title text-center">{{ produit.couleur }}</p>
+        </div>
+        
+        {% endfor %}
+    </div>
+</div>
+
+    
+    {% endblock %}

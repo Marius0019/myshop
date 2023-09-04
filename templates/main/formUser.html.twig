@@ -1,0 +1,97 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {% if editMode %}
+        Modifier
+    {% else %}
+        Ajouter
+    {% endif %}
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container my-3 p-4 w-70 border border-secondary" >
+<h1 class="text-center my-4 p-4 bg-secondary"> Gestion des Membres </h1>
+
+    <div class="container mt-5">
+        <table class="table table-warning table-striped">
+            <thead>
+                <tr>
+                    <th>Roles</th>
+                    <th>#</th>
+                    <th>Pseudo</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th>Civilite</th>
+                    {# <th>Statut</th> #}
+                    <th>Date_enregistrement</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in user %}
+                    
+                <tr>
+                <td>
+                    {# On boucle sur les rôles #}
+                
+                    {% for role in user.roles %}
+                        {% if role == "ROLE_USER" %}
+                            Utilisateur
+                        {% elseif role == "ROLE_ADMIN" %}
+                            Administrateur
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.pseudo }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.civilite }}</td>
+                    {# <td>{{ user.statut }}</td> #}
+                    <td>{{ user.dateEnregistrement|date('d/m/Y à  H:i:s')}}</td>                        
+                    <td>
+                        <a href="{{ path('main_user_modifier', {id: user.id} )}}" class=""><i class="bi bi-pencil-square"></a>
+                        <a href="{{ path('main_user_supprimer', {id: user.id} )}}" class=""><i class="bi bi-trash3-fill"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="container my-4 border border-primary p-4">
+        <h2 class="text-center my-4 p-3 mb-2 bg-secondary ">Ajouter un membre</h2>
+    {{ form_start(formUser, {
+        attr:{
+            novalidate: 'novalidate' , 
+             }
+    })}}
+    <div class="row">
+    <div class="col-6">{{ form_row(formUser.pseudo) }}</div>
+    <div class="col-6">{{ form_row(formUser.email) }}</div>
+    </div>
+    <div class="row">
+    <div class="col-6">{{ form_row(formUser.plainPassword) }}</div>
+    <div class="col-6">{{ form_row(formUser.civilite) }}</div>
+    <div class="col-6">{{ form_row(formUser.nom) }}</div>
+    {# {% for item in items %}
+        
+    {% endfor %} #}
+    <div class="col-6">{{ form_row(formUser.roles) }}</div>
+    </div>
+    <div class="row">
+    <div class="col-6">{{ form_row(formUser.prenom) }}</div>
+    <button type="submit" class="text-center btn btn-secondary text-dark">Enregistrer</button>
+    </div>
+    {{ form_end(formUser) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+

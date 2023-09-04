@@ -1,0 +1,41 @@
+
+{% extends "base.html.twig" %}
+
+{% block title %}Validation panier{% endblock %}
+
+{% block body %}
+
+<div class="container mt-3">
+	<h1 class="text-center my-4">Validation de votre panier</h1>
+    {# {% for produit in produits %} #}
+
+	<div class="col-md-10 mx-auto">
+		<div class="card bg-dark text-white mb-3">
+			<h3 class="card-header">{{ produit.titre }}</h3>
+			<img src="{{ asset('img/upload/' ~ item.produit.photo) }}" alt="Image du produit">
+			<div class="card-body">
+				<p class="card-text">{{ produit.description|slice(0, 100)}}</p>
+				<p class="card-text text-end fw-bold">{{ produit.prix }}€/j</p>
+			</div>
+		</div>
+	</div>
+    <div class="col-md-10 mx-auto bg-dark text-white card p-5">
+	{% if commandes %}
+
+		{{ form_start(form) }}
+
+		{{ form_row(form.quantite) }}
+		{{ form_row(form.montant) }}
+        <div class="text-end mt-4">
+		    <button type="submit" class="btn btn-outline-warning">Effectuez le paiment</button>
+        </div>
+		{{ form_end(form) }}
+	{% else %}
+		<a href="{{ path('app_login') }}">Veuillez vous connecter</a>
+		pour effectuer votre panier.
+	{% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
